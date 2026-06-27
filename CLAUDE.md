@@ -4,14 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a modern, minimalist portfolio template built with Astro and Tailwind CSS v4. It's designed to be easily customizable through a single configuration file while maintaining a clean, professional appearance.
-
-## Tech Stack
-
-- **Astro**: Static site generator
-- **Tailwind CSS v4**: Utility-first CSS framework using the new @tailwindcss/vite plugin
-- **TypeScript**: For type-safe configuration
-- **Tabler Icons**: Icon library
+Minimalist single-page portfolio template built with Astro and Tailwind CSS v4. All content is customized through `src/config.ts` — no component edits needed for content changes.
 
 ## Development Commands
 
@@ -21,44 +14,34 @@ npm run build     # Build for production
 npm run preview   # Preview production build
 ```
 
+No linting or testing frameworks are configured.
+
 ## Architecture
 
-The project follows a component-based architecture with all customization centralized in `src/config.ts`:
+- `src/config.ts` — single source of truth. Exports `siteConfig` with: name, title, description, accentColor, social links (all optional), aboutMe, skills, projects, experience, education.
+- `src/pages/index.astro` — single-page layout importing all section components and `global.css`.
+- `src/components/` — one `.astro` component per section (Hero, About, Projects, Experience, Education, Header, Footer). Each imports `siteConfig` directly.
+- `src/styles/global.css` — imports Tailwind and sets IBM Plex Mono as the base font.
+- `astro.config.mjs` — Tailwind CSS v4 via `@tailwindcss/vite` plugin (not the older PostCSS integration).
 
-- **Components** (`src/components/`): Individual Astro components for each section (Hero, About, Projects, Experience, Education, Header, Footer)
-- **Main Layout** (`src/pages/index.astro`): Single-page layout that imports all components
-- **Configuration** (`src/config.ts`): Single source of truth for all content and customization
+### Key Patterns
 
-### Key Architectural Decisions
+- **Conditional rendering**: Sections with array data (projects, experience, education) check for non-empty arrays and hide entirely when data is removed from config. Nav links in Header also hide correspondingly.
+- **Accent color propagation**: `siteConfig.accentColor` is applied via inline `style` attributes and CSS custom properties (`--accent-color`), not Tailwind theme config.
+- **Icons are inline SVGs** from Tabler Icons — there is no icon package dependency. New icons should follow the same inline SVG pattern.
+- **Hero animations**: Custom `fadeIn` keyframes with staggered delay classes defined in a `<style>` block within `Hero.astro`.
+- **Header scroll effect**: Client-side `<script>` in `Header.astro` adds `bg-white/80 backdrop-blur-sm` classes on scroll > 100px.
 
-1. **Single Configuration File**: All content is managed through `src/config.ts` to make customization simple
-2. **Conditional Rendering**: Sections automatically hide if their data is removed from the config
-3. **Component Independence**: Each section is a self-contained component that reads from the config
-4. **Accent Color System**: Single `accentColor` in config propagates throughout the site via CSS custom properties
+### Adding a New Section
 
-## Important Implementation Details
+1. Create component in `src/components/` following existing patterns (import `siteConfig`, wrap in conditional if data-driven)
+2. Add corresponding data shape to `src/config.ts`
+3. Import and place in `src/pages/index.astro`
+4. Add nav link in `Header.astro` with conditional rendering
 
-- The site uses Tailwind CSS v4 with the Vite plugin configuration
-- No linting or testing framework is currently configured
-- All components are in `.astro` format (not React/Vue/etc)
-- The project uses IBM Plex Mono font loaded from Google Fonts
-- Social links in the config are all optional and will conditionally render
+## Styling Conventions
 
-## Working with Components
-
-When modifying components:
-1. Components read directly from the imported `siteConfig` object
-2. Use Tailwind utility classes for styling
-3. Maintain the existing monospace font aesthetic
-4. Use Tabler Icons for consistency with existing icons
-
-## Configuration Structure
-
-The `src/config.ts` exports a `siteConfig` object with these sections:
-- Basic info: name, title, description, accentColor
-- Social links: email, linkedin, twitter, github (all optional)
-- aboutMe: string
-- skills: string[]
-- projects: array of {name, description, link, skills}
-- experience: array of {company, title, dateRange, bullets}
-- education: array of {school, degree, dateRange, achievements}
+- Tailwind utility classes only — no custom CSS files beyond `global.css`
+- Responsive breakpoints: `sm:`, `md:`, `lg:`, `xl:` prefixes throughout
+- Section layout pattern: `lg:grid-cols-12` with title in `lg:col-span-4` and content in `lg:col-span-8`
+- Consistent section padding: `p-8 sm:p-12 md:p-16 lg:p-24`

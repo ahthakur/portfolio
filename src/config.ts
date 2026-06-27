@@ -1,92 +1,95 @@
 export const siteConfig = {
-  name: "Ryan Fitzgerald",
-  title: "Senior Software Engineer",
-  description: "Portfolio website of Ryan Fitzgerald",
+  name: "Abhijit Thakur",
+  title: "Senior DevSecOps & Cloud Security Engineer",
+  description:
+    "Portfolio of Abhijit Thakur, Senior DevSecOps & Cloud Security Engineer",
   accentColor: "#1d4ed8",
   social: {
-    email: "your-email@example.com",
-    linkedin: "https://linkedin.com/in/yourprofile",
-    twitter: "https://x.com/rfitzio",
-    github: "https://github.com/RyanFitzgerald",
+    email: "Abhijit.Thakur@icloud.com",
+    linkedin: "https://www.linkedin.com/in/abhijit-thakur-58b87742/",
+    github: "https://github.com/ahthakur",
   },
   aboutMe:
-    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem quos asperiores nihil consequatur tempore cupiditate architecto natus commodi corrupti quas quasi facere est, dignissimos odit nam veniam sapiente ut, vitae eligendi ipsum dolor, nostrum ullam impedit! Corrupti ratione mollitia temporibus necessitatibus, consectetur reiciendis recusandae id, dolorum quaerat, vero pariatur. Ratione!",
-  skills: ["Javascript", "React", "Node.js", "Python", "AWS", "Docker"],
+    "Security and DevSecOps engineer with over 16 years of experience hardening regulated cloud environments. " +
+    "At IBM Cloud, I secure an observability platform spanning 20+ OpenShift clusters and 5,500+ nodes, embedding SAST/DAST into CI/CD pipelines " +
+    "and leading audit certifications across SOC 2, PCI-DSS, HIPAA, ISO 27001, and FedRAMP. " +
+    "My background spans container security, compliance automation, Kubernetes, and the intersection of security with AI infrastructure. " +
+    "I build practical tools that solve real deployment problems rather than demos.",
+  skills: [
+    "DevSecOps",
+    "Cloud Security",
+    "Kubernetes",
+    "CI/CD Pipeline Security",
+    "SOC 2 / PCI-DSS",
+    "Python",
+    "Bash",
+    "Terraform",
+  ],
   projects: [
     {
-      name: "AI Dev Roundup Newsletter",
+      name: "ComplianceGuard",
       description:
-        "One concise email. Five minutes. Every Tuesday. Essential AI news & trends, production-ready libraries, powerful AI tools, and real-world code examples",
-      link: "https://aidevroundup.com/?ref=devportfolio",
-      skills: ["React", "Node.js", "AWS"],
+        "AI-powered compliance drift detection agent that scans containerized infrastructure against declarative YAML policies, classifies violations with Claude AI, and generates PCI-DSS v4.0 auditor-ready evidence reports with guided remediation.",
+      link: "https://github.com/ahthakur/complianceguard",
+      skills: ["Python", "Docker", "Claude AI", "PCI-DSS"],
     },
     {
-      name: "Chrome Extension Mastery: Build Full-Stack Extensions with React & Node.js",
+      name: "DrinkFinder",
       description:
-        "Master the art of building production-ready, full-stack Chrome Extensions using modern web technologies and best practices",
-      link: "https://fullstackextensions.com/?ref=devportfolio",
-      skills: ["React", "Node.js", "AWS"],
+        "Next.js application that compares real in-store drink prices from local retailers to help users find the cheapest options nearby.",
+      link: "https://github.com/ahthakur/drinkfinder",
+      skills: ["Next.js", "TypeScript"],
     },
     {
-      name: "ExtensionKit",
+      name: "Go InfoSec Lab",
       description:
-        "Kit to jump-start your Chrome extension projects with a variety of battle-tested starter templates & examples",
-      link: "https://extensionkit.io/?ref=devportfolio",
-      skills: ["React", "Node.js", "AWS"],
+        "Collection of Go-based security utilities — entropy analyzer, hash cracker, and subnet calculator — for hands-on infosec experimentation.",
+      link: "https://github.com/ahthakur/go-infosec-lab",
+      skills: ["Go", "Security"],
+    },
+    {
+      name: "Dietician K8s",
+      description:
+        "Helm chart for deploying a self-hosted, AI-powered nutrition and meal planning application to Kubernetes.",
+      link: "https://github.com/ahthakur/dietician-k8s",
+      skills: ["Kubernetes", "Helm"],
     },
   ],
   experience: [
     {
-      company: "Tech Company",
-      title: "Senior Software Engineer",
-      dateRange: "Jan 2022 - Present",
+      company: "IBM Cloud",
+      title: "Senior DevSecOps / Cloud Security Engineer",
+      dateRange: "Sep 2016 - Present",
       bullets: [
-        "Led development of microservices architecture serving 1M+ users",
-        "Reduced API response times by 40% through optimization",
-        "Mentored team of 5 junior developers",
+        "Secured a microservices platform across 20+ OpenShift clusters and 5,500+ nodes, enforcing mTLS, RBAC, namespace isolation, and pod security constraints supporting 1M+ log lines/hour at 99% uptime SLA.",
+        "Hardened CI/CD pipelines by integrating SAST (SonarQube, Mend) and DAST (OWASP ZAP) scanning, dependency checks, and policy-enforced deployment validation with automated rollback.",
+        "Led audit certifications (SOC 2, HIPAA, PCI-DSS, ISO 27001, FedRAMP) achieving 100% compliance across IBM Public Cloud PaaS; served as primary security liaison with auditors.",
       ],
     },
     {
-      company: "Startup Inc",
-      title: "Full Stack Developer",
-      dateRange: "Jun 2020 - Dec 2021",
+      company: "FedEx Services",
+      title: "Technical Analyst, Identity and Access Management",
+      dateRange: "Jan 2013 - Sep 2016",
       bullets: [
-        "Built and launched MVP product from scratch using React and Node.js",
-        "Implemented CI/CD pipeline reducing deployment time by 60%",
-        "Collaborated with product team to define technical requirements",
-      ],
-    },
-    {
-      company: "Digital Agency",
-      title: "Frontend Developer",
-      dateRange: "Aug 2018 - May 2020",
-      bullets: [
-        "Developed responsive web applications for 20+ clients",
-        "Improved site performance scores by 35% on average",
-        "Introduced modern JavaScript frameworks to legacy codebases",
+        "Led enterprise-wide Web SSO implementation using SAML, OAuth 2.0, and OIDC via PingFederate, enabling secure authentication across 100+ internal and external applications.",
+        "Managed and upgraded PingFederate to support high-volume authentication for 50+ vendor integrations while enforcing SHA-2/TLS 1.2 security standards.",
+        "Managed SSL certificate lifecycle across Apache, WebLogic, and PingFederate servers, reducing unplanned downtime for critical authentication services.",
       ],
     },
   ],
+  resume: "/Abhijit_Thakur_Resume.pdf",
   education: [
     {
-      school: "University Name",
-      degree: "Bachelor of Science in Computer Science",
-      dateRange: "2014 - 2018",
-      achievements: [
-        "Graduated Magna Cum Laude with 3.8 GPA",
-        "Dean's List all semesters",
-        "President of Computer Science Club",
-      ],
+      school: "University of Memphis",
+      degree: "Master of Science, Computer Science",
+      dateRange: "2011 - 2012",
+      achievements: [],
     },
     {
-      school: "Online Platform",
-      degree: "Full Stack Development Certificate",
-      dateRange: "2019",
-      achievements: [
-        "Completed 500+ hours of coursework",
-        "Built 10+ portfolio projects",
-        "Specialized in React and Node.js",
-      ],
+      school: "University of Pune, India",
+      degree: "Bachelor of Engineering, Computer Science",
+      dateRange: "2005 - 2008",
+      achievements: [],
     },
   ],
 };

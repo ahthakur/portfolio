@@ -1,0 +1,61 @@
+---
+import { siteConfig } from "../config";
+const hasResume = !!siteConfig.resume;
+---
+
+{
+  hasResume && (
+    <section id="resume" class="p-8 sm:p-12 md:p-16 lg:p-24">
+      <div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+          <div class="lg:col-span-4">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900">
+              Resume
+            </h2>
+            <div
+              class="w-[75px] h-[5px] mt-2 rounded-full"
+              style={`background-color: ${siteConfig.accentColor}`}
+            />
+          </div>
+
+          <div class="lg:col-span-8">
+            <div class="bg-gray-50 rounded-xl sm:rounded-2xl border border-gray-200 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div>
+                <p class="text-lg sm:text-xl text-gray-800 font-medium">
+                  Download my resume
+                </p>
+                <p class="text-sm sm:text-base text-gray-500 mt-1">
+                  PDF format
+                </p>
+              </div>
+              <a
+                href={siteConfig.resume}
+                download
+                class="inline-flex items-center gap-2 px-6 py-3 text-white rounded-lg text-sm sm:text-base font-medium transition-all duration-300 hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg flex-shrink-0"
+                style={`background-color: ${siteConfig.accentColor}`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                  <path d="M7 11l5 5l5 -5" />
+                  <path d="M12 4l0 12" />
+                </svg>
+                Download Resume
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
