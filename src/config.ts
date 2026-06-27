@@ -35,6 +35,15 @@ export const siteConfig = {
       skills: ["Python", "Docker", "Claude AI", "PCI-DSS"],
     },
     {
+      name: "Personal Dietician",
+      description:
+        "Full-stack AI-powered nutrition and meal planning app with computer vision food logging, workout-aware scheduling, and real-time macro tracking.",
+      link: "https://github.com/ahthakur/dietician-k8s",
+      demo: "/demo/dietician",
+      liveUrl: "http://34.172.18.199:8080/",
+      skills: ["Python", "FastAPI", "Claude AI", "Kubernetes"],
+    },
+    {
       name: "DrinkFinder",
       description:
         "Next.js application that compares real in-store drink prices from local retailers to help users find the cheapest options nearby.",
@@ -49,15 +58,6 @@ export const siteConfig = {
         "Collection of Go-based security utilities — entropy analyzer, hash cracker, and subnet calculator — for hands-on infosec experimentation.",
       link: "https://github.com/ahthakur/go-infosec-lab",
       skills: ["Go", "Security"],
-    },
-    {
-      name: "Personal Dietician",
-      description:
-        "Full-stack AI-powered nutrition and meal planning app with computer vision food logging, workout-aware scheduling, and real-time macro tracking.",
-      link: "https://github.com/ahthakur/dietician-k8s",
-      demo: "/demo/dietician",
-      liveUrl: "http://34.172.18.199:8080/",
-      skills: ["Python", "FastAPI", "Claude AI", "Kubernetes"],
     },
   ],
   experience: [

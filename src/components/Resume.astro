@@ -9,7 +9,7 @@ const hasResume = !!siteConfig.resume;
       <div>
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
           <div class="lg:col-span-4">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-900">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold" style="color: #ccd6f6">
               Resume
             </h2>
             <div
@@ -19,19 +19,19 @@ const hasResume = !!siteConfig.resume;
           </div>
 
           <div class="lg:col-span-8">
-            <div class="bg-gray-50 rounded-xl sm:rounded-2xl border border-gray-200 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div class="resume-card rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div>
-                <p class="text-lg sm:text-xl text-gray-800 font-medium">
+                <p class="text-lg sm:text-xl font-medium" style="color: #ccd6f6">
                   Download my resume
                 </p>
-                <p class="text-sm sm:text-base text-gray-500 mt-1">
+                <p class="text-sm sm:text-base mt-1 font-mono" style="color: #495670">
                   PDF format
                 </p>
               </div>
               <a
                 href={siteConfig.resume}
                 download
-                class="inline-flex items-center gap-2 px-6 py-3 text-white rounded-lg text-sm sm:text-base font-medium transition-all duration-300 hover:opacity-90 hover:-translate-y-0.5 hover:shadow-lg flex-shrink-0"
+                class="resume-btn inline-flex items-center gap-2 px-6 py-3 text-white rounded-lg text-sm sm:text-base font-medium transition-all duration-300 hover:-translate-y-0.5 flex-shrink-0"
                 style={`background-color: ${siteConfig.accentColor}`}
               >
                 <svg
@@ -59,3 +59,14 @@ const hasResume = !!siteConfig.resume;
     </section>
   )
 }
+
+<style>
+  .resume-card {
+    background-color: rgba(17, 34, 64, 0.4);
+    border: 1px solid #233554;
+  }
+
+  .resume-btn:hover {
+    box-shadow: 0 0 20px rgba(29, 78, 216, 0.4);
+  }
+</style>

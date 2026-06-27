@@ -26,7 +26,8 @@ import "../styles/global.css";
     />
     <title>{siteConfig.name} - {siteConfig.title}</title>
   </head>
-  <body>
+  <body class="relative" style="background-color: #0a192f; color: #8892b0;">
+    <div id="spotlight" class="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300" style="background: radial-gradient(600px at 50% 50%, rgba(29, 78, 216, 0.07), transparent 80%);"></div>
     <Header />
     <section>
       <Hero />
@@ -37,5 +38,11 @@ import "../styles/global.css";
       <Resume />
     </section>
     <Footer />
+    <script>
+      const spotlight = document.getElementById('spotlight');
+      document.addEventListener('mousemove', (e) => {
+        spotlight!.style.background = `radial-gradient(600px at ${e.clientX}px ${e.clientY}px, rgba(29, 78, 216, 0.07), transparent 80%)`;
+      });
+    </script>
   </body>
 </html>
