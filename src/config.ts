@@ -31,6 +31,7 @@ export const siteConfig = {
       description:
         "AI-powered compliance drift detection agent that scans containerized infrastructure against declarative YAML policies, classifies violations with Claude AI, and generates PCI-DSS v4.0 auditor-ready evidence reports with guided remediation.",
       link: "https://github.com/ahthakur/complianceguard",
+      demo: "/demo/complianceguard",
       skills: ["Python", "Docker", "Claude AI", "PCI-DSS"],
     },
     {
@@ -38,6 +39,8 @@ export const siteConfig = {
       description:
         "Next.js application that compares real in-store drink prices from local retailers to help users find the cheapest options nearby.",
       link: "https://github.com/ahthakur/drinkfinder",
+      demo: "/demo/drinkfinder",
+      liveUrl: "https://drinkfinder-eight.vercel.app/",
       skills: ["Next.js", "TypeScript"],
     },
     {
@@ -48,11 +51,13 @@ export const siteConfig = {
       skills: ["Go", "Security"],
     },
     {
-      name: "Dietician K8s",
+      name: "Personal Dietician",
       description:
-        "Helm chart for deploying a self-hosted, AI-powered nutrition and meal planning application to Kubernetes.",
+        "Full-stack AI-powered nutrition and meal planning app with computer vision food logging, workout-aware scheduling, and real-time macro tracking.",
       link: "https://github.com/ahthakur/dietician-k8s",
-      skills: ["Kubernetes", "Helm"],
+      demo: "/demo/dietician",
+      liveUrl: "http://34.172.18.199:8080/",
+      skills: ["Python", "FastAPI", "Claude AI", "Kubernetes"],
     },
   ],
   experience: [

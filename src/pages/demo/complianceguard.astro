@@ -1,0 +1,603 @@
+---
+import { siteConfig } from "../../config";
+import "../../styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="ComplianceGuard - AI-Powered Compliance Drift Detection Demo" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <title>ComplianceGuard Demo - {siteConfig.name}</title>
+  </head>
+  <body class="bg-gray-950 text-gray-100 min-h-screen" style="background-color: #0a0a0f; color: #f3f4f6;">
+    <nav class="border-b border-gray-800 px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M5 12l6-6"/><path d="M5 12l6 6"/></svg>
+        Back to Portfolio
+      </a>
+      <a href="https://github.com/ahthakur/complianceguard" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2">
+        View Source
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 00-1.3-3.2 4.2 4.2 0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 00-6.2 0c-2.4-1.6-3.5-1.3-3.5-1.3a4.2 4.2 0 00-.1 3.2 4.6 4.6 0 00-1.3 3.2c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2v3.5"/></svg>
+      </a>
+    </nav>
+
+    <div class="max-w-5xl mx-auto px-6 py-12">
+      <!-- Header -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center" style={`background-color: ${siteConfig.accentColor}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-bold">ComplianceGuard</h1>
+        </div>
+        <p class="text-gray-400 text-lg max-w-2xl">
+          AI-powered compliance drift detection agent with guided remediation and full OpenTelemetry observability. Watch a simulated scan against PCI-DSS v4.0 policies.
+        </p>
+        <p class="text-yellow-500 text-sm mt-3 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v.01"/><path d="M12 8v4"/></svg>
+          Interactive demo with mock data
+        </p>
+      </div>
+
+      <!-- Section nav -->
+      <div class="flex flex-wrap gap-2 mb-10">
+        <a href="#scan" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg text-sm hover:bg-gray-700 transition-colors">1. Scan &amp; Detect</a>
+        <a href="#remediation" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg text-sm hover:bg-gray-700 transition-colors">2. Remediation</a>
+        <a href="#observability" class="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg text-sm hover:bg-gray-700 transition-colors">3. Observability</a>
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SECTION 1: SCAN & DETECT                    -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div id="scan" class="mb-16">
+        <h2 class="text-xl font-bold mb-6 text-gray-200 flex items-center gap-2">
+          <span class="text-sm px-2 py-0.5 rounded bg-blue-500/20 text-blue-400">Phase 1-4</span>
+          Scan &amp; Detect
+        </h2>
+
+        <div class="mb-6 flex gap-3">
+          <button id="run-scan" class="px-5 py-2.5 text-white rounded-lg text-sm font-medium transition-all duration-300 hover:opacity-90 hover:shadow-lg flex items-center gap-2" style={`background-color: ${siteConfig.accentColor}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16l13-8z"/></svg>
+            Run Scan
+          </button>
+          <button id="reset-scan" class="px-5 py-2.5 bg-gray-800 text-gray-300 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-700 hidden items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8.1 8.1 0 004.5 9M4 5v4h4"/><path d="M4 13a8.1 8.1 0 0015.5 2m.5 4v-4h-4"/></svg>
+            Reset
+          </button>
+        </div>
+
+        <!-- Terminal -->
+        <div class="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden mb-8" style="background-color: #111827;">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            <span class="text-gray-500 text-xs ml-2">complianceguard — scan</span>
+          </div>
+          <div id="terminal" class="p-5 font-mono text-sm leading-relaxed h-[400px] overflow-y-auto">
+            <p class="text-gray-500">$ python3 -m agent.main --policy pci-dss-v4.yaml</p>
+            <p class="text-gray-500 mt-1">Press "Run Scan" to start...</p>
+          </div>
+        </div>
+
+        <!-- Findings Dashboard -->
+        <div id="dashboard" class="hidden">
+          <h3 class="text-lg font-bold mb-4 text-gray-200">Findings Summary</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+            <div class="bg-gray-900 rounded-xl border border-gray-800 p-5 text-center" style="background-color: #111827;">
+              <div class="text-3xl font-bold text-red-500">2</div>
+              <div class="text-xs text-gray-500 mt-1 uppercase tracking-wide">Critical</div>
+            </div>
+            <div class="bg-gray-900 rounded-xl border border-gray-800 p-5 text-center" style="background-color: #111827;">
+              <div class="text-3xl font-bold text-orange-500">3</div>
+              <div class="text-xs text-gray-500 mt-1 uppercase tracking-wide">High</div>
+            </div>
+            <div class="bg-gray-900 rounded-xl border border-gray-800 p-5 text-center" style="background-color: #111827;">
+              <div class="text-3xl font-bold text-yellow-500">1</div>
+              <div class="text-xs text-gray-500 mt-1 uppercase tracking-wide">Medium</div>
+            </div>
+            <div class="bg-gray-900 rounded-xl border border-gray-800 p-5 text-center" style="background-color: #111827;">
+              <div class="text-3xl font-bold text-green-500">4</div>
+              <div class="text-xs text-gray-500 mt-1 uppercase tracking-wide">Pass</div>
+            </div>
+          </div>
+
+          <div class="space-y-3 mb-8">
+            <div class="bg-gray-900 rounded-lg border border-gray-800 p-4 flex items-start gap-4" style="background-color: #111827;">
+              <span class="px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs font-medium mt-0.5 flex-shrink-0">CRITICAL</span>
+              <div>
+                <p class="text-gray-200 font-medium">Container running as root user</p>
+                <p class="text-gray-500 text-sm mt-1">PCI-DSS v4.0 Req 6.3.2 — web-app container runs as UID 0. Attack scenario: container escape grants host-level root access.</p>
+              </div>
+            </div>
+            <div class="bg-gray-900 rounded-lg border border-gray-800 p-4 flex items-start gap-4" style="background-color: #111827;">
+              <span class="px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs font-medium mt-0.5 flex-shrink-0">CRITICAL</span>
+              <div>
+                <p class="text-gray-200 font-medium">Sensitive data in environment variables</p>
+                <p class="text-gray-500 text-sm mt-1">PCI-DSS v4.0 Req 3.5.1 — DATABASE_PASSWORD exposed as plaintext env var. Risk: credential leak via process listing.</p>
+              </div>
+            </div>
+            <div class="bg-gray-900 rounded-lg border border-gray-800 p-4 flex items-start gap-4" style="background-color: #111827;">
+              <span class="px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded text-xs font-medium mt-0.5 flex-shrink-0">HIGH</span>
+              <div>
+                <p class="text-gray-200 font-medium">TLS not enforced on API endpoint</p>
+                <p class="text-gray-500 text-sm mt-1">PCI-DSS v4.0 Req 4.2.1 — api-gateway exposes port 8080 (HTTP) without TLS termination.</p>
+              </div>
+            </div>
+            <div class="bg-gray-900 rounded-lg border border-gray-800 p-4 flex items-start gap-4" style="background-color: #111827;">
+              <span class="px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded text-xs font-medium mt-0.5 flex-shrink-0">HIGH</span>
+              <div>
+                <p class="text-gray-200 font-medium">No resource limits configured</p>
+                <p class="text-gray-500 text-sm mt-1">PCI-DSS v4.0 Req 6.3.2 — web-app container has no CPU/memory limits. Risk: denial of service via resource exhaustion.</p>
+              </div>
+            </div>
+            <div class="bg-gray-900 rounded-lg border border-gray-800 p-4 flex items-start gap-4" style="background-color: #111827;">
+              <span class="px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded text-xs font-medium mt-0.5 flex-shrink-0">HIGH</span>
+              <div>
+                <p class="text-gray-200 font-medium">Image pulled from untrusted registry</p>
+                <p class="text-gray-500 text-sm mt-1">PCI-DSS v4.0 Req 6.3.1 — db container uses postgres:latest from Docker Hub without digest pinning.</p>
+              </div>
+            </div>
+            <div class="bg-gray-900 rounded-lg border border-gray-800 p-4 flex items-start gap-4" style="background-color: #111827;">
+              <span class="px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded text-xs font-medium mt-0.5 flex-shrink-0">MEDIUM</span>
+              <div>
+                <p class="text-gray-200 font-medium">Health check endpoint not configured</p>
+                <p class="text-gray-500 text-sm mt-1">PCI-DSS v4.0 Req 10.7 — web-app container has no liveness or readiness probe.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Audit Report -->
+          <div class="bg-gray-900 rounded-xl border border-gray-800 p-6" style="background-color: #111827;">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-gray-200">Audit Report</h3>
+              <span class="text-xs text-gray-500 font-mono">SHA-256: a3f8c1...9d4e2b</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div><span class="text-gray-500">Framework:</span> <span class="text-gray-200">PCI-DSS v4.0</span></div>
+              <div><span class="text-gray-500">Containers scanned:</span> <span class="text-gray-200">3</span></div>
+              <div><span class="text-gray-500">Policies evaluated:</span> <span class="text-gray-200">10</span></div>
+              <div><span class="text-gray-500">Compliance score:</span> <span class="text-red-400 font-medium">40%</span></div>
+              <div><span class="text-gray-500">Report format:</span> <span class="text-gray-200">JSON / HTML / PDF</span></div>
+              <div><span class="text-gray-500">Scan duration:</span> <span class="text-gray-200">12.4s</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SECTION 2: GUIDED REMEDIATION               -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div id="remediation" class="mb-16">
+        <h2 class="text-xl font-bold mb-2 text-gray-200 flex items-center gap-2">
+          <span class="text-sm px-2 py-0.5 rounded bg-green-500/20 text-green-400">Phase 5</span>
+          Guided Remediation
+        </h2>
+        <p class="text-gray-500 text-sm mb-6">
+          The MCP server exposes remediation tools that Claude can call conversationally. Every action follows a dry-run → approve → apply → verify workflow.
+        </p>
+
+        <div class="mb-6 flex gap-3">
+          <button id="run-remediation" class="px-5 py-2.5 text-white rounded-lg text-sm font-medium transition-all duration-300 hover:opacity-90 hover:shadow-lg flex items-center gap-2 bg-green-600 hover:bg-green-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 013.002 3.002L7.368 18.635a2 2 0 01-.855.506l-2.872.838a.5.5 0 01-.62-.62l.838-2.872a2 2 0 01.506-.855z"/></svg>
+            Remediate Finding
+          </button>
+          <button id="reset-remediation" class="px-5 py-2.5 bg-gray-800 text-gray-300 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-700 hidden items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8.1 8.1 0 004.5 9M4 5v4h4"/><path d="M4 13a8.1 8.1 0 0015.5 2m.5 4v-4h-4"/></svg>
+            Reset
+          </button>
+        </div>
+
+        <!-- Remediation Terminal -->
+        <div class="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden mb-6" style="background-color: #111827;">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            <span class="text-gray-500 text-xs ml-2">complianceguard — mcp remediation</span>
+          </div>
+          <div id="remediation-terminal" class="p-5 font-mono text-sm leading-relaxed h-[420px] overflow-y-auto">
+            <p class="text-gray-500">MCP Server ready. Press "Remediate Finding" to simulate a guided fix...</p>
+          </div>
+        </div>
+
+        <!-- Workflow diagram -->
+        <div class="bg-gray-900 rounded-xl border border-gray-800 p-6" style="background-color: #111827;">
+          <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Remediation Workflow</h3>
+          <div class="flex flex-wrap items-center gap-3 text-sm">
+            <div class="flex items-center gap-2 px-3 py-2 bg-gray-800 rounded-lg">
+              <span class="text-yellow-400">1.</span>
+              <span class="text-gray-300">preview_remediation()</span>
+            </div>
+            <span class="text-gray-600">→</span>
+            <div class="flex items-center gap-2 px-3 py-2 bg-gray-800 rounded-lg">
+              <span class="text-blue-400">2.</span>
+              <span class="text-gray-300">User reviews diff</span>
+            </div>
+            <span class="text-gray-600">→</span>
+            <div class="flex items-center gap-2 px-3 py-2 bg-gray-800 rounded-lg">
+              <span class="text-green-400">3.</span>
+              <span class="text-gray-300">apply_remediation()</span>
+            </div>
+            <span class="text-gray-600">→</span>
+            <div class="flex items-center gap-2 px-3 py-2 bg-gray-800 rounded-lg">
+              <span class="text-purple-400">4.</span>
+              <span class="text-gray-300">Re-scan to verify</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- SECTION 3: OBSERVABILITY                    -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div id="observability" class="mb-16">
+        <h2 class="text-xl font-bold mb-2 text-gray-200 flex items-center gap-2">
+          <span class="text-sm px-2 py-0.5 rounded bg-purple-500/20 text-purple-400">OpenTelemetry</span>
+          AI Agent Observability
+        </h2>
+        <p class="text-gray-500 text-sm mb-6">
+          Every agent run emits distributed traces, metrics, and logs via OpenTelemetry. The trace waterfall shows exactly where time and tokens are spent across the pipeline.
+        </p>
+
+        <!-- Architecture -->
+        <div class="bg-gray-900 rounded-xl border border-gray-800 p-6 mb-6" style="background-color: #111827;">
+          <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Telemetry Architecture</h3>
+          <div class="font-mono text-sm text-gray-400 leading-loose">
+            <p>ComplianceGuard Agent <span class="text-gray-600">(OpenTelemetry SDK)</span></p>
+            <p class="text-gray-600 ml-8">│ OTLP/gRPC</p>
+            <p class="ml-8">OTel Collector</p>
+            <p class="text-gray-600 ml-8">│</p>
+            <p class="ml-8"><span class="text-gray-600">├── traces  →</span> <span class="text-purple-400">Grafana Tempo</span></p>
+            <p class="ml-8"><span class="text-gray-600">├── metrics →</span> <span class="text-orange-400">Prometheus</span></p>
+            <p class="ml-8"><span class="text-gray-600">└── viz     →</span> <span class="text-green-400">Grafana</span> <span class="text-gray-600">(dashboards + trace waterfall)</span></p>
+          </div>
+        </div>
+
+        <!-- Trace Waterfall -->
+        <div class="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden mb-6" style="background-color: #111827;">
+          <div class="flex items-center justify-between px-5 py-3 border-b border-gray-800">
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+              <span class="text-gray-300 text-sm font-medium">Trace Waterfall</span>
+            </div>
+            <span class="text-gray-500 text-xs font-mono">trace_id: 7a3f8c1e9d4b2a06</span>
+          </div>
+          <div class="p-5">
+            <!-- Header -->
+            <div class="flex items-center text-xs text-gray-500 mb-4 px-2">
+              <span class="w-56 flex-shrink-0">Span</span>
+              <div class="flex-1 flex justify-between">
+                <span>0ms</span>
+                <span>3s</span>
+                <span>6s</span>
+                <span>9s</span>
+                <span>12.4s</span>
+              </div>
+            </div>
+
+            <!-- Root span -->
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-200 truncate">compliance.run</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded" style={`left: 0%; width: 100%; background-color: ${siteConfig.accentColor}40; border: 1px solid ${siteConfig.accentColor};`}></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scan span -->
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-400 truncate pl-4">├─ compliance.scan</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded bg-cyan-500/40 border border-cyan-500" style="left: 0%; width: 8%;"></div>
+                  <span class="absolute top-0.5 text-xs text-cyan-400 font-mono" style="left: 9%;">1.0s</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Evaluate span -->
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-400 truncate pl-4">├─ compliance.evaluate</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded bg-yellow-500/40 border border-yellow-500" style="left: 8%; width: 6%;"></div>
+                  <span class="absolute top-0.5 text-xs text-yellow-400 font-mono" style="left: 15%;">0.8s</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Classify span (parent) -->
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-400 truncate pl-4">├─ compliance.classify</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded bg-purple-500/40 border border-purple-500" style="left: 14%; width: 72%;"></div>
+                  <span class="absolute top-0.5 text-xs text-purple-400 font-mono" style="left: 87%;">8.9s</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- LLM classify spans -->
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-500 truncate pl-8">├─ llm.classify_finding</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded bg-violet-500/40 border border-violet-500" style="left: 14%; width: 12%;"></div>
+                  <span class="absolute top-0.5 text-xs text-violet-400 font-mono" style="left: 27%;">1.5s</span>
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-500 truncate pl-8">├─ llm.classify_finding</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded bg-violet-500/40 border border-violet-500" style="left: 26%; width: 11%;"></div>
+                  <span class="absolute top-0.5 text-xs text-violet-400 font-mono" style="left: 38%;">1.3s</span>
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-500 truncate pl-8">├─ llm.classify_finding</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded bg-violet-500/40 border border-violet-500" style="left: 37%; width: 12%;"></div>
+                  <span class="absolute top-0.5 text-xs text-violet-400 font-mono" style="left: 50%;">1.4s</span>
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-500 truncate pl-8">├─ llm.classify_finding</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded bg-violet-500/40 border border-violet-500" style="left: 49%; width: 10%;"></div>
+                  <span class="absolute top-0.5 text-xs text-violet-400 font-mono" style="left: 60%;">1.2s</span>
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-500 truncate pl-8">├─ llm.classify_finding</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded bg-violet-500/40 border border-violet-500" style="left: 59%; width: 13%;"></div>
+                  <span class="absolute top-0.5 text-xs text-violet-400 font-mono" style="left: 73%;">1.6s</span>
+                </div>
+              </div>
+            </div>
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-500 truncate pl-8">└─ llm.classify_finding</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded bg-violet-500/40 border border-violet-500" style="left: 72%; width: 14%;"></div>
+                  <span class="absolute top-0.5 text-xs text-violet-400 font-mono" style="left: 87%;">1.9s</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Report span -->
+            <div class="mb-1">
+              <div class="flex items-center px-2 py-1.5 hover:bg-gray-800/50 rounded">
+                <span class="w-56 flex-shrink-0 text-sm text-gray-400 truncate pl-4">└─ compliance.report</span>
+                <div class="flex-1 relative h-5">
+                  <div class="absolute top-0.5 h-4 rounded bg-green-500/40 border border-green-500" style="left: 86%; width: 14%;"></div>
+                  <span class="absolute top-0.5 text-xs text-green-400 font-mono" style="left: 101%;">1.7s</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Span detail -->
+        <div class="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden mb-6" style="background-color: #111827;">
+          <div class="px-5 py-3 border-b border-gray-800">
+            <span class="text-gray-300 text-sm font-medium">Span Detail: llm.classify_finding</span>
+            <span class="text-gray-500 text-xs ml-2">(finding 1 of 6)</span>
+          </div>
+          <div class="p-5">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-3 text-sm font-mono">
+              <div><span class="text-gray-500">llm.model</span><br><span class="text-gray-200">claude-sonnet-4-20250514</span></div>
+              <div><span class="text-gray-500">llm.input_tokens</span><br><span class="text-gray-200">1,247</span></div>
+              <div><span class="text-gray-500">llm.output_tokens</span><br><span class="text-gray-200">834</span></div>
+              <div><span class="text-gray-500">llm.latency_ms</span><br><span class="text-gray-200">1,523</span></div>
+              <div><span class="text-gray-500">llm.cost_usd</span><br><span class="text-gray-200">$0.0062</span></div>
+              <div><span class="text-gray-500">finding.rule_id</span><br><span class="text-gray-200">no-root-user</span></div>
+              <div><span class="text-gray-500">finding.container</span><br><span class="text-gray-200">web-app</span></div>
+              <div><span class="text-gray-500">span.kind</span><br><span class="text-gray-200">CLIENT</span></div>
+              <div><span class="text-gray-500">status</span><br><span class="text-green-400">OK</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LLM Metrics Dashboard -->
+        <div class="bg-gray-900 rounded-xl border border-gray-800 p-6" style="background-color: #111827;">
+          <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-5">LLM Observability Metrics</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="bg-gray-800 rounded-lg p-4 text-center">
+              <div class="text-2xl font-bold text-purple-400">7,482</div>
+              <div class="text-xs text-gray-500 mt-1">Input Tokens</div>
+              <div class="w-full bg-gray-700 rounded-full h-1 mt-2"><div class="h-1 rounded-full bg-purple-400" style="width: 75%"></div></div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-4 text-center">
+              <div class="text-2xl font-bold text-blue-400">5,004</div>
+              <div class="text-xs text-gray-500 mt-1">Output Tokens</div>
+              <div class="w-full bg-gray-700 rounded-full h-1 mt-2"><div class="h-1 rounded-full bg-blue-400" style="width: 50%"></div></div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-4 text-center">
+              <div class="text-2xl font-bold text-green-400">$0.037</div>
+              <div class="text-xs text-gray-500 mt-1">Total Cost</div>
+              <div class="w-full bg-gray-700 rounded-full h-1 mt-2"><div class="h-1 rounded-full bg-green-400" style="width: 37%"></div></div>
+            </div>
+            <div class="bg-gray-800 rounded-lg p-4 text-center">
+              <div class="text-2xl font-bold text-orange-400">1.48s</div>
+              <div class="text-xs text-gray-500 mt-1">Avg Latency (p50)</div>
+              <div class="w-full bg-gray-700 rounded-full h-1 mt-2"><div class="h-1 rounded-full bg-orange-400" style="width: 60%"></div></div>
+            </div>
+          </div>
+          <p class="text-gray-600 text-xs mt-4">
+            Metrics exported to Prometheus, tagged by model. Classification stage dominates runtime — sequential Claude API calls are the optimization target.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const terminal = document.getElementById('terminal')!;
+      const runBtn = document.getElementById('run-scan')!;
+      const resetBtn = document.getElementById('reset-scan')!;
+      const dashboard = document.getElementById('dashboard')!;
+
+      const remTerminal = document.getElementById('remediation-terminal')!;
+      const remRunBtn = document.getElementById('run-remediation')!;
+      const remResetBtn = document.getElementById('reset-remediation')!;
+
+      const scanLines = [
+        { text: '', delay: 300 },
+        { text: '╔══════════════════════════════════════════════════╗', delay: 100, cls: 'text-blue-400' },
+        { text: '║         ComplianceGuard v1.0 — Scan Agent        ║', delay: 100, cls: 'text-blue-400' },
+        { text: '╚══════════════════════════════════════════════════╝', delay: 400, cls: 'text-blue-400' },
+        { text: '', delay: 200 },
+        { text: '▶ Phase 1/5: SCAN — Querying container state...', delay: 600, cls: 'text-cyan-400' },
+        { text: '  ├─ Inspecting container: web-app', delay: 300, cls: 'text-gray-400' },
+        { text: '  │  Image: node:18-alpine | Status: running | Ports: 3000', delay: 200, cls: 'text-gray-500' },
+        { text: '  ├─ Inspecting container: api-gateway', delay: 300, cls: 'text-gray-400' },
+        { text: '  │  Image: nginx:1.25 | Status: running | Ports: 8080', delay: 200, cls: 'text-gray-500' },
+        { text: '  ├─ Inspecting container: db', delay: 300, cls: 'text-gray-400' },
+        { text: '  │  Image: postgres:latest | Status: running | Ports: 5432', delay: 200, cls: 'text-gray-500' },
+        { text: '  └─ 3 containers discovered', delay: 400, cls: 'text-green-400' },
+        { text: '', delay: 200 },
+        { text: '▶ Phase 2/5: EVALUATE — Comparing against pci-dss-v4.yaml...', delay: 600, cls: 'text-cyan-400' },
+        { text: '  ├─ Policy: no-root-user .................... FAIL', delay: 250, cls: 'text-red-400' },
+        { text: '  ├─ Policy: no-plaintext-secrets ............ FAIL', delay: 250, cls: 'text-red-400' },
+        { text: '  ├─ Policy: tls-required .................... FAIL', delay: 250, cls: 'text-red-400' },
+        { text: '  ├─ Policy: resource-limits ................. FAIL', delay: 250, cls: 'text-red-400' },
+        { text: '  ├─ Policy: trusted-registry ................ FAIL', delay: 250, cls: 'text-red-400' },
+        { text: '  ├─ Policy: health-checks ................... FAIL', delay: 250, cls: 'text-yellow-400' },
+        { text: '  ├─ Policy: read-only-rootfs ................ PASS', delay: 200, cls: 'text-green-400' },
+        { text: '  ├─ Policy: network-segmentation ............ PASS', delay: 200, cls: 'text-green-400' },
+        { text: '  ├─ Policy: log-forwarding .................. PASS', delay: 200, cls: 'text-green-400' },
+        { text: '  └─ Policy: image-scanning .................. PASS', delay: 200, cls: 'text-green-400' },
+        { text: '  Drift detected: 6 violations across 3 containers', delay: 400, cls: 'text-yellow-400' },
+        { text: '', delay: 200 },
+        { text: '▶ Phase 3/5: CLASSIFY — Claude AI analyzing violations...', delay: 800, cls: 'text-cyan-400' },
+        { text: '  ├─ Enriching finding 1/6: attack scenario, business risk...', delay: 400, cls: 'text-gray-400' },
+        { text: '  ├─ Enriching finding 2/6: PCI-DSS control mapping...', delay: 350, cls: 'text-gray-400' },
+        { text: '  ├─ Enriching finding 3/6: remediation steps...', delay: 300, cls: 'text-gray-400' },
+        { text: '  ├─ Enriching finding 4/6: severity classification...', delay: 350, cls: 'text-gray-400' },
+        { text: '  ├─ Enriching finding 5/6: attack scenario...', delay: 300, cls: 'text-gray-400' },
+        { text: '  ├─ Enriching finding 6/6: remediation steps...', delay: 300, cls: 'text-gray-400' },
+        { text: '  └─ Classification complete: 2 critical, 3 high, 1 medium', delay: 400, cls: 'text-green-400' },
+        { text: '', delay: 200 },
+        { text: '▶ Phase 4/5: REPORT — Generating audit evidence...', delay: 600, cls: 'text-cyan-400' },
+        { text: '  ├─ Writing JSON report...', delay: 300, cls: 'text-gray-400' },
+        { text: '  ├─ Rendering HTML report...', delay: 300, cls: 'text-gray-400' },
+        { text: '  ├─ Generating PDF report...', delay: 300, cls: 'text-gray-400' },
+        { text: '  └─ SHA-256 hash: a3f8c1...9d4e2b (tamper detection)', delay: 400, cls: 'text-green-400' },
+        { text: '', delay: 300 },
+        { text: '══════════════════════════════════════════════════', delay: 100, cls: 'text-blue-400' },
+        { text: '  Scan complete. 6 findings | Compliance: 40% | 12.4s', delay: 100, cls: 'text-white' },
+        { text: '  Exit code: 1 (findings detected — CI/CD gate: BLOCK)', delay: 100, cls: 'text-red-400' },
+        { text: '══════════════════════════════════════════════════', delay: 100, cls: 'text-blue-400' },
+      ];
+
+      const remLines = [
+        { text: '', delay: 200 },
+        { text: '╔══════════════════════════════════════════════════╗', delay: 100, cls: 'text-green-400' },
+        { text: '║       ComplianceGuard — Guided Remediation       ║', delay: 100, cls: 'text-green-400' },
+        { text: '╚══════════════════════════════════════════════════╝', delay: 400, cls: 'text-green-400' },
+        { text: '', delay: 200 },
+        { text: 'Target: CRITICAL — Container running as root user', delay: 400, cls: 'text-red-400' },
+        { text: 'Container: web-app | Rule: no-root-user', delay: 300, cls: 'text-gray-400' },
+        { text: '', delay: 300 },
+        { text: '▶ Step 1: DRY-RUN — preview_remediation("no-root-user", "web-app")', delay: 600, cls: 'text-yellow-400' },
+        { text: '', delay: 200 },
+        { text: '  Proposed changes to docker-compose.yml:', delay: 300, cls: 'text-gray-300' },
+        { text: '', delay: 100 },
+        { text: '    web-app:', delay: 150, cls: 'text-gray-400' },
+        { text: '      image: node:18-alpine', delay: 100, cls: 'text-gray-400' },
+        { text: '-     # no user directive (runs as root)', delay: 150, cls: 'text-red-400' },
+        { text: '+     user: "1000:1000"', delay: 150, cls: 'text-green-400' },
+        { text: '      security_opt:', delay: 100, cls: 'text-gray-400' },
+        { text: '+       - no-new-privileges:true', delay: 150, cls: 'text-green-400' },
+        { text: '', delay: 300 },
+        { text: '  ✓ Dry-run complete. No changes applied yet.', delay: 400, cls: 'text-yellow-400' },
+        { text: '', delay: 400 },
+        { text: '▶ Step 2: APPROVE — User reviewing diff...', delay: 600, cls: 'text-blue-400' },
+        { text: '  ✓ Change approved by operator.', delay: 800, cls: 'text-blue-400' },
+        { text: '', delay: 300 },
+        { text: '▶ Step 3: APPLY — apply_remediation("no-root-user", "web-app")', delay: 600, cls: 'text-green-400' },
+        { text: '  ├─ Writing docker-compose.yml...', delay: 400, cls: 'text-gray-400' },
+        { text: '  ├─ Restarting container web-app...', delay: 600, cls: 'text-gray-400' },
+        { text: '  ├─ Container restarted successfully', delay: 400, cls: 'text-green-400' },
+        { text: '  └─ Logged to reports/remediation-audit.log', delay: 300, cls: 'text-gray-400' },
+        { text: '', delay: 300 },
+        { text: '▶ Step 4: VERIFY — Re-scanning to confirm fix...', delay: 600, cls: 'text-purple-400' },
+        { text: '  ├─ Inspecting container: web-app', delay: 300, cls: 'text-gray-400' },
+        { text: '  │  User: 1000 (was: 0/root) ✓', delay: 300, cls: 'text-green-400' },
+        { text: '  ├─ Policy: no-root-user .................... PASS', delay: 300, cls: 'text-green-400' },
+        { text: '  └─ Finding resolved. Compliance: 40% → 50%', delay: 400, cls: 'text-green-400' },
+        { text: '', delay: 300 },
+        { text: '══════════════════════════════════════════════════', delay: 100, cls: 'text-green-400' },
+        { text: '  Remediation complete. 1 finding fixed.', delay: 100, cls: 'text-white' },
+        { text: '  Audit trail written. Ready for next finding.', delay: 100, cls: 'text-gray-400' },
+        { text: '══════════════════════════════════════════════════', delay: 100, cls: 'text-green-400' },
+      ];
+
+      let scanRunning = false;
+      let remRunning = false;
+
+      async function animateTerminal(el: HTMLElement, lines: typeof scanLines) {
+        for (const line of lines) {
+          await new Promise(r => setTimeout(r, line.delay));
+          const p = document.createElement('p');
+          p.textContent = line.text || ' ';
+          if (line.cls) p.className = line.cls;
+          el.appendChild(p);
+          el.scrollTop = el.scrollHeight;
+        }
+      }
+
+      runBtn.addEventListener('click', async () => {
+        if (scanRunning) return;
+        scanRunning = true;
+        runBtn.classList.add('opacity-50', 'pointer-events-none');
+        terminal.innerHTML = '<p class="text-gray-500">$ python3 -m agent.main --policy pci-dss-v4.yaml</p>';
+        dashboard.classList.add('hidden');
+        await animateTerminal(terminal, scanLines);
+        await new Promise(r => setTimeout(r, 500));
+        dashboard.classList.remove('hidden');
+        dashboard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resetBtn.classList.remove('hidden');
+        scanRunning = false;
+      });
+
+      resetBtn.addEventListener('click', () => {
+        terminal.innerHTML = '<p class="text-gray-500">$ python3 -m agent.main --policy pci-dss-v4.yaml</p><p class="text-gray-500 mt-1">Press "Run Scan" to start...</p>';
+        dashboard.classList.add('hidden');
+        resetBtn.classList.add('hidden');
+        runBtn.classList.remove('opacity-50', 'pointer-events-none');
+      });
+
+      remRunBtn.addEventListener('click', async () => {
+        if (remRunning) return;
+        remRunning = true;
+        remRunBtn.classList.add('opacity-50', 'pointer-events-none');
+        remTerminal.innerHTML = '';
+        await animateTerminal(remTerminal, remLines);
+        remResetBtn.classList.remove('hidden');
+        remRunning = false;
+      });
+
+      remResetBtn.addEventListener('click', () => {
+        remTerminal.innerHTML = '<p class="text-gray-500">MCP Server ready. Press "Remediate Finding" to simulate a guided fix...</p>';
+        remResetBtn.classList.add('hidden');
+        remRunBtn.classList.remove('opacity-50', 'pointer-events-none');
+      });
+    </script>
+  </body>
+</html>
