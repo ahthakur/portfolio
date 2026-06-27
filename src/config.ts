@@ -40,7 +40,7 @@ export const siteConfig = {
         "Full-stack AI-powered nutrition and meal planning app with computer vision food logging, workout-aware scheduling, and real-time macro tracking.",
       link: "https://github.com/ahthakur/dietician-k8s",
       demo: "/demo/dietician",
-      liveUrl: "http://34.172.18.199:8080/",
+      liveUrl: "https://dietician.abhijitt.com",
       skills: ["Python", "FastAPI", "Claude AI", "Kubernetes"],
     },
     {
