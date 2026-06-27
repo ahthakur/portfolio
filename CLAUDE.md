@@ -30,7 +30,8 @@ No linting or testing frameworks are configured.
 - **Accent color propagation**: `siteConfig.accentColor` is applied via inline `style` attributes and CSS custom properties (`--accent-color`), not Tailwind theme config.
 - **Icons are inline SVGs** from Tabler Icons — there is no icon package dependency. New icons should follow the same inline SVG pattern.
 - **Hero animations**: Custom `fadeIn` keyframes with staggered delay classes defined in a `<style>` block within `Hero.astro`.
-- **Header scroll effect**: Client-side `<script>` in `Header.astro` adds `bg-white/80 backdrop-blur-sm` classes on scroll > 100px.
+- **Header scroll effect**: Client-side `<script>` in `Header.astro` adds a `.header-scrolled` class on scroll > 100px (navy background with blur).
+- **Cursor spotlight**: `index.astro` includes a fixed overlay div (`#spotlight`) with a mouse-tracking radial gradient (`rgba(29, 78, 216, 0.07)`) for a subtle interactive glow effect.
 
 ### Adding a New Section
 
@@ -39,9 +40,22 @@ No linting or testing frameworks are configured.
 3. Import and place in `src/pages/index.astro`
 4. Add nav link in `Header.astro` with conditional rendering
 
+## Dark Mode Color Palette
+
+The site uses a navy-tinted dark theme, not neutral grays. Key colors:
+- Background: `#0a192f` (deep navy)
+- Cards: `rgba(17, 34, 64, 0.4)` (translucent navy) with `#233554` borders
+- Headings: `#ccd6f6` (cool slate white)
+- Body text: `#8892b0` (blue-gray slate)
+- Muted text: `#495670` (deep slate, for dates/secondary info)
+- Accent: `#1d4ed8` (blue, set via `siteConfig.accentColor`)
+- Footer bg: `#112240` (slightly lighter navy)
+
+Colors are applied via inline `style` attributes and component-scoped `<style>` blocks (not Tailwind color classes) to maintain the tinted palette. Hover states use accent-colored glows (`box-shadow`) and translucent accent backgrounds.
+
 ## Styling Conventions
 
-- Tailwind utility classes only — no custom CSS files beyond `global.css`
+- Tailwind utility classes for layout/spacing, inline styles and scoped `<style>` blocks for colors
 - Responsive breakpoints: `sm:`, `md:`, `lg:`, `xl:` prefixes throughout
 - Section layout pattern: `lg:grid-cols-12` with title in `lg:col-span-4` and content in `lg:col-span-8`
 - Consistent section padding: `p-8 sm:p-12 md:p-16 lg:p-24`
