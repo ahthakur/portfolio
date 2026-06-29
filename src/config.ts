@@ -58,6 +58,7 @@ export const siteConfig = {
         "Lakehouse exploring decades of daily US stock-market history. Trino federates from Postgres into Iceberg on MinIO through a Bronze/Silver/Gold medallion pipeline, and a local Ollama model turns plain-English questions into live SQL.",
       link: "https://github.com/ahthakur/stock-lakehouse",
       demo: "/demo/stock-lakehouse",
+      liveUrl: "https://lakehouse.abhijitt.com",
       skills: ["Trino", "Apache Iceberg", "MinIO", "Ollama", "Python"],
     },
   ],
