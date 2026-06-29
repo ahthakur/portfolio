@@ -232,24 +232,6 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
         { text: "  PLTR   Palantir              356.2%", color: "#4ade80", delay: 250 },
       ],
     },
-    "Go InfoSec Lab": {
-      title: "go-infosec-lab — tools",
-      lines: [
-        { text: "$ entropy-analyzer /var/log/auth.log", color: "#6b7280", delay: 400 },
-        { text: "", color: "", delay: 200 },
-        { text: "Analyzing 2,847 lines ...", color: "#22d3ee", delay: 500 },
-        { text: "", color: "", delay: 200 },
-        { text: "  Shannon entropy:  4.82 bits/byte", color: "#ccd6f6", delay: 300 },
-        { text: "  Chi-square:       284.3 (normal)", color: "#ccd6f6", delay: 300 },
-        { text: "  Anomalous lines:  3 flagged", color: "#eab308", delay: 300 },
-        { text: "", color: "", delay: 200 },
-        { text: "$ hash-cracker -m sha256 -w rockyou.txt", color: "#6b7280", delay: 500 },
-        { text: "  Loaded 1 hash, testing 14M candidates", color: "#22d3ee", delay: 400 },
-        { text: "  Speed: 2.1 MH/s", color: "#6b7280", delay: 300 },
-        { text: "  Found: e99a18c4 → \"abc123\"", color: "#4ade80", delay: 500 },
-        { text: "  Cracked 1/1 in 6.7s", color: "#4ade80", delay: 300 },
-      ],
-    },
   };
 
   function createLine(text: string, color: string): HTMLParagraphElement {

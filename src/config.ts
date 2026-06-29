@@ -60,13 +60,6 @@ export const siteConfig = {
       demo: "/demo/stock-lakehouse",
       skills: ["Trino", "Apache Iceberg", "MinIO", "Ollama", "Python"],
     },
-    {
-      name: "Go InfoSec Lab",
-      description:
-        "Collection of Go-based security utilities — entropy analyzer, hash cracker, and subnet calculator — for hands-on infosec experimentation.",
-      link: "https://github.com/ahthakur/go-infosec-lab",
-      skills: ["Go", "Security"],
-    },
   ],
   experience: [
     {
