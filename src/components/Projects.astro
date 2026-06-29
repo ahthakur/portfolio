@@ -38,6 +38,20 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
                         </h3>
                       </div>
 
+                      {/* Mini terminal preview */}
+                      <div class="mini-terminal rounded-lg overflow-hidden border" style="background-color: #0d1117; border-color: #1e2d3d;">
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 border-b" style="border-color: #1e2d3d;">
+                          <div class="w-2 h-2 rounded-full" style="background-color: #ff5f57;"></div>
+                          <div class="w-2 h-2 rounded-full" style="background-color: #febc2e;"></div>
+                          <div class="w-2 h-2 rounded-full" style="background-color: #28c840;"></div>
+                          <span class="text-[10px] ml-1.5" style="color: #4a5568;" data-terminal-title={project.name}></span>
+                        </div>
+                        <div
+                          class="terminal-body px-3 py-2 font-mono text-xs leading-[1.6] h-[140px] overflow-hidden"
+                          data-project={project.name}
+                        ></div>
+                      </div>
+
                       <p class="text-base sm:text-lg leading-relaxed" style="color: #8892b0">
                         {project.description}
                       </p>
@@ -121,4 +135,172 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
     color: white;
     background-color: rgba(29, 78, 216, 0.1);
   }
+
+  .mini-terminal {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .mini-terminal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 </style>
+
+<script>
+  interface TermLine {
+    text: string;
+    color: string;
+    delay: number;
+  }
+
+  const animations: Record<string, { title: string; lines: TermLine[] }> = {
+    "ComplianceGuard": {
+      title: "complianceguard — scan",
+      lines: [
+        { text: "$ python3 -m agent.main --policy pci-dss-v4.yaml", color: "#6b7280", delay: 400 },
+        { text: "", color: "", delay: 200 },
+        { text: "[1/5] Scanning containers ...", color: "#22d3ee", delay: 500 },
+        { text: "  web-app   api-gateway   db", color: "#6b7280", delay: 300 },
+        { text: "[2/5] Evaluating 10 policies ...", color: "#22d3ee", delay: 500 },
+        { text: "[3/5] Classifying with Claude AI ...", color: "#a78bfa", delay: 600 },
+        { text: "", color: "", delay: 200 },
+        { text: "  CRITICAL  2   root user, plaintext secrets", color: "#ef4444", delay: 300 },
+        { text: "  HIGH      3   no TLS, no limits, unpin image", color: "#f97316", delay: 300 },
+        { text: "  MEDIUM    1   missing health check", color: "#eab308", delay: 300 },
+        { text: "  PASS      4", color: "#22c55e", delay: 300 },
+        { text: "", color: "", delay: 200 },
+        { text: "[4/5] Report: reports/_LastReport/", color: "#22d3ee", delay: 400 },
+        { text: "[5/5] Compliance score: 40%", color: "#ef4444", delay: 400 },
+      ],
+    },
+    "Personal Dietician": {
+      title: "dietician — dashboard",
+      lines: [
+        { text: "$ curl dietician.abhijitt.com/api/dashboard", color: "#6b7280", delay: 400 },
+        { text: "", color: "", delay: 200 },
+        { text: "Today's Macros              Abhijit", color: "#ccd6f6", delay: 300 },
+        { text: "─────────────────────────────────", color: "#2d3748", delay: 100 },
+        { text: "Calories   ████████░░░░  847 / 1800", color: "#60a5fa", delay: 400 },
+        { text: "Protein    ██████████░░   92 / 160g", color: "#4ade80", delay: 400 },
+        { text: "Fiber      ████████░░░░   18 / 35g", color: "#facc15", delay: 400 },
+        { text: "", color: "", delay: 200 },
+        { text: "Today's Log (3 entries)", color: "#ccd6f6", delay: 300 },
+        { text: "  8:30 AM  Greek yogurt + berries   285 cal", color: "#6b7280", delay: 300 },
+        { text: " 12:15 PM  Grilled chicken salad    420 cal", color: "#6b7280", delay: 300 },
+        { text: "  3:00 PM  Protein shake            142 cal", color: "#6b7280", delay: 300 },
+        { text: "", color: "", delay: 200 },
+        { text: "🔥 Burn Bootcamp 9:00 AM  |  🥂 Social PM", color: "#fb923c", delay: 300 },
+      ],
+    },
+    "DrinkFinder": {
+      title: "drinkfinder — search",
+      lines: [
+        { text: "Search: Tito's Vodka 750ml", color: "#ccd6f6", delay: 400 },
+        { text: "", color: "", delay: 200 },
+        { text: "Comparing prices across 4 stores ...", color: "#22d3ee", delay: 600 },
+        { text: "", color: "", delay: 200 },
+        { text: "  Store               Price", color: "#8892b0", delay: 200 },
+        { text: "  ───────────────────────────", color: "#2d3748", delay: 100 },
+        { text: "  Total Wine          $19.99  ★ Best", color: "#4ade80", delay: 400 },
+        { text: "  ABC Fine Wine       $22.49", color: "#ccd6f6", delay: 300 },
+        { text: "  Publix              $24.99", color: "#ccd6f6", delay: 300 },
+        { text: "  CVS                 $27.99", color: "#ccd6f6", delay: 300 },
+        { text: "", color: "", delay: 200 },
+        { text: "  You save $8.00 at Total Wine", color: "#4ade80", delay: 400 },
+        { text: "  0.3 mi away · Open until 10 PM", color: "#6b7280", delay: 300 },
+      ],
+    },
+    "Stock Lakehouse": {
+      title: "stock-lakehouse — text-to-sql",
+      lines: [
+        { text: "Question: Which stocks gained most in 2024?", color: "#ccd6f6", delay: 400 },
+        { text: "", color: "", delay: 200 },
+        { text: "Generating SQL with Ollama (llama3.2:1b) ...", color: "#a78bfa", delay: 600 },
+        { text: "SELECT ticker, company_name,", color: "#22d3ee", delay: 200 },
+        { text: "  round(annual_return*100,1) AS pct", color: "#22d3ee", delay: 200 },
+        { text: "FROM iceberg.gold.annual_returns", color: "#22d3ee", delay: 200 },
+        { text: "WHERE year = 2024", color: "#22d3ee", delay: 200 },
+        { text: "ORDER BY annual_return DESC LIMIT 5", color: "#22d3ee", delay: 200 },
+        { text: "", color: "", delay: 200 },
+        { text: "Executing on Trino ... (0.34s)", color: "#f97316", delay: 500 },
+        { text: "  RGTI                        1551.5%", color: "#4ade80", delay: 250 },
+        { text: "  APP    AppLovin              735.0%", color: "#4ade80", delay: 250 },
+        { text: "  LUNR   Intuitive Machines    669.5%", color: "#4ade80", delay: 250 },
+        { text: "  RKLB   Rocket Lab            379.7%", color: "#4ade80", delay: 250 },
+        { text: "  PLTR   Palantir              356.2%", color: "#4ade80", delay: 250 },
+      ],
+    },
+    "Go InfoSec Lab": {
+      title: "go-infosec-lab — tools",
+      lines: [
+        { text: "$ entropy-analyzer /var/log/auth.log", color: "#6b7280", delay: 400 },
+        { text: "", color: "", delay: 200 },
+        { text: "Analyzing 2,847 lines ...", color: "#22d3ee", delay: 500 },
+        { text: "", color: "", delay: 200 },
+        { text: "  Shannon entropy:  4.82 bits/byte", color: "#ccd6f6", delay: 300 },
+        { text: "  Chi-square:       284.3 (normal)", color: "#ccd6f6", delay: 300 },
+        { text: "  Anomalous lines:  3 flagged", color: "#eab308", delay: 300 },
+        { text: "", color: "", delay: 200 },
+        { text: "$ hash-cracker -m sha256 -w rockyou.txt", color: "#6b7280", delay: 500 },
+        { text: "  Loaded 1 hash, testing 14M candidates", color: "#22d3ee", delay: 400 },
+        { text: "  Speed: 2.1 MH/s", color: "#6b7280", delay: 300 },
+        { text: "  Found: e99a18c4 → \"abc123\"", color: "#4ade80", delay: 500 },
+        { text: "  Cracked 1/1 in 6.7s", color: "#4ade80", delay: 300 },
+      ],
+    },
+  };
+
+  function createLine(text: string, color: string): HTMLParagraphElement {
+    const p = document.createElement('p');
+    if (text === '') {
+      p.innerHTML = '&nbsp;';
+    } else {
+      p.textContent = text;
+    }
+    if (color) p.style.color = color;
+    p.style.margin = '0';
+    p.style.whiteSpace = 'pre';
+    return p;
+  }
+
+  async function runAnimation(el: HTMLElement, lines: TermLine[]) {
+    el.innerHTML = '';
+    for (const line of lines) {
+      await new Promise(r => setTimeout(r, line.delay));
+      el.appendChild(createLine(line.text, line.color));
+      el.scrollTop = el.scrollHeight;
+    }
+  }
+
+  async function loopAnimation(el: HTMLElement, lines: TermLine[]) {
+    while (true) {
+      await runAnimation(el, lines);
+      await new Promise(r => setTimeout(r, 3000));
+    }
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const terminal = entry.target as HTMLElement;
+      const wrapper = terminal.closest('.mini-terminal') as HTMLElement;
+
+      if (entry.isIntersecting && !terminal.dataset.started) {
+        terminal.dataset.started = '1';
+        wrapper?.classList.add('visible');
+
+        const projectName = terminal.dataset.project!;
+        const anim = animations[projectName];
+        if (!anim) return;
+
+        const titleEl = wrapper?.querySelector('[data-terminal-title]');
+        if (titleEl) titleEl.textContent = anim.title;
+
+        loopAnimation(terminal, anim.lines);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.terminal-body').forEach(el => observer.observe(el));
+</script>
