@@ -38,19 +38,37 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
                         </h3>
                       </div>
 
-                      {/* Mini terminal preview */}
-                      <div class="mini-terminal rounded-lg overflow-hidden border" style="background-color: #0d1117; border-color: #1e2d3d;">
-                        <div class="flex items-center gap-1.5 px-3 py-1.5 border-b" style="border-color: #1e2d3d;">
-                          <div class="w-2 h-2 rounded-full" style="background-color: #ff5f57;"></div>
-                          <div class="w-2 h-2 rounded-full" style="background-color: #febc2e;"></div>
-                          <div class="w-2 h-2 rounded-full" style="background-color: #28c840;"></div>
-                          <span class="text-[10px] ml-1.5" style="color: #4a5568;" data-terminal-title={project.name}></span>
+                      {/* Project preview */}
+                      {["Personal Dietician", "DrinkFinder"].includes(project.name) ? (
+                        <div class="mini-preview rounded-lg overflow-hidden border" style="background-color: #0d1117; border-color: #1e2d3d;">
+                          <div class="flex items-center gap-1.5 px-3 py-1.5 border-b" style="border-color: #1e2d3d;">
+                            <div class="w-2 h-2 rounded-full" style="background-color: #ff5f57;"></div>
+                            <div class="w-2 h-2 rounded-full" style="background-color: #febc2e;"></div>
+                            <div class="w-2 h-2 rounded-full" style="background-color: #28c840;"></div>
+                            <span class="text-[10px] ml-1.5" style="color: #4a5568;">
+                              {project.name === "Personal Dietician" ? "dietician.abhijitt.com" : "drinkfinder.vercel.app"}
+                            </span>
+                          </div>
+                          <div
+                            class="preview-body overflow-hidden"
+                            style="height: 190px; padding: 8px;"
+                            data-project={project.name}
+                          ></div>
                         </div>
-                        <div
-                          class="terminal-body px-3 py-2 font-mono text-xs leading-[1.6] h-[140px] overflow-hidden"
-                          data-project={project.name}
-                        ></div>
-                      </div>
+                      ) : (
+                        <div class="mini-terminal rounded-lg overflow-hidden border" style="background-color: #0d1117; border-color: #1e2d3d;">
+                          <div class="flex items-center gap-1.5 px-3 py-1.5 border-b" style="border-color: #1e2d3d;">
+                            <div class="w-2 h-2 rounded-full" style="background-color: #ff5f57;"></div>
+                            <div class="w-2 h-2 rounded-full" style="background-color: #febc2e;"></div>
+                            <div class="w-2 h-2 rounded-full" style="background-color: #28c840;"></div>
+                            <span class="text-[10px] ml-1.5" style="color: #4a5568;" data-terminal-title={project.name}></span>
+                          </div>
+                          <div
+                            class="terminal-body px-3 py-2 font-mono text-xs leading-[1.6] h-[140px] overflow-hidden"
+                            data-project={project.name}
+                          ></div>
+                        </div>
+                      )}
 
                       <p class="text-base sm:text-lg leading-relaxed" style="color: #8892b0">
                         {project.description}
@@ -146,6 +164,22 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
     opacity: 1;
     transform: translateY(0);
   }
+
+  .mini-preview {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .mini-preview.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
 </style>
 
 <script>
@@ -155,7 +189,9 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
     delay: number;
   }
 
-  const animations: Record<string, { title: string; lines: TermLine[] }> = {
+  const wait = (ms: number) => new Promise(r => setTimeout(r, ms));
+
+  const terminalAnimations: Record<string, { title: string; lines: TermLine[] }> = {
     "ComplianceGuard": {
       title: "complianceguard — scan",
       lines: [
@@ -173,43 +209,6 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
         { text: "", color: "", delay: 200 },
         { text: "[4/5] Report: reports/_LastReport/", color: "#22d3ee", delay: 400 },
         { text: "[5/5] Compliance score: 40%", color: "#ef4444", delay: 400 },
-      ],
-    },
-    "Personal Dietician": {
-      title: "dietician — dashboard",
-      lines: [
-        { text: "$ curl dietician.abhijitt.com/api/dashboard", color: "#6b7280", delay: 400 },
-        { text: "", color: "", delay: 200 },
-        { text: "Today's Macros              Abhijit", color: "#ccd6f6", delay: 300 },
-        { text: "─────────────────────────────────", color: "#2d3748", delay: 100 },
-        { text: "Calories   ████████░░░░  847 / 1800", color: "#60a5fa", delay: 400 },
-        { text: "Protein    ██████████░░   92 / 160g", color: "#4ade80", delay: 400 },
-        { text: "Fiber      ████████░░░░   18 / 35g", color: "#facc15", delay: 400 },
-        { text: "", color: "", delay: 200 },
-        { text: "Today's Log (3 entries)", color: "#ccd6f6", delay: 300 },
-        { text: "  8:30 AM  Greek yogurt + berries   285 cal", color: "#6b7280", delay: 300 },
-        { text: " 12:15 PM  Grilled chicken salad    420 cal", color: "#6b7280", delay: 300 },
-        { text: "  3:00 PM  Protein shake            142 cal", color: "#6b7280", delay: 300 },
-        { text: "", color: "", delay: 200 },
-        { text: "🔥 Burn Bootcamp 9:00 AM  |  🥂 Social PM", color: "#fb923c", delay: 300 },
-      ],
-    },
-    "DrinkFinder": {
-      title: "drinkfinder — search",
-      lines: [
-        { text: "Search: Tito's Vodka 750ml", color: "#ccd6f6", delay: 400 },
-        { text: "", color: "", delay: 200 },
-        { text: "Comparing prices across 4 stores ...", color: "#22d3ee", delay: 600 },
-        { text: "", color: "", delay: 200 },
-        { text: "  Store               Price", color: "#8892b0", delay: 200 },
-        { text: "  ───────────────────────────", color: "#2d3748", delay: 100 },
-        { text: "  Total Wine          $19.99  ★ Best", color: "#4ade80", delay: 400 },
-        { text: "  ABC Fine Wine       $22.49", color: "#ccd6f6", delay: 300 },
-        { text: "  Publix              $24.99", color: "#ccd6f6", delay: 300 },
-        { text: "  CVS                 $27.99", color: "#ccd6f6", delay: 300 },
-        { text: "", color: "", delay: 200 },
-        { text: "  You save $8.00 at Total Wine", color: "#4ade80", delay: 400 },
-        { text: "  0.3 mi away · Open until 10 PM", color: "#6b7280", delay: 300 },
       ],
     },
     "Stock Lakehouse": {
@@ -247,42 +246,211 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
     return p;
   }
 
-  async function runAnimation(el: HTMLElement, lines: TermLine[]) {
+  async function runTerminalAnimation(el: HTMLElement, lines: TermLine[]) {
     el.innerHTML = '';
     for (const line of lines) {
-      await new Promise(r => setTimeout(r, line.delay));
+      await wait(line.delay);
       el.appendChild(createLine(line.text, line.color));
       el.scrollTop = el.scrollHeight;
     }
   }
 
-  async function loopAnimation(el: HTMLElement, lines: TermLine[]) {
+  async function loopTerminalAnimation(el: HTMLElement, lines: TermLine[]) {
     while (true) {
-      await runAnimation(el, lines);
-      await new Promise(r => setTimeout(r, 3000));
+      await runTerminalAnimation(el, lines);
+      await wait(3000);
     }
   }
 
-  const observer = new IntersectionObserver((entries) => {
+  function el(tag: string, styles: string, text?: string): HTMLElement {
+    const node = document.createElement(tag);
+    node.style.cssText = styles;
+    if (text) node.textContent = text;
+    return node;
+  }
+
+  async function buildDieticianMockup(container: HTMLElement) {
+    container.innerHTML = '';
+
+    const header = el('div', 'display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;opacity:0;transition:opacity 0.3s');
+    header.appendChild(el('span', 'color:#f3f4f6;font-weight:600;font-size:11px', 'Dietician'));
+    header.appendChild(el('span', 'background:#1d4ed8;color:white;padding:1px 8px;border-radius:10px;font-size:9px', 'Abhijit'));
+    container.appendChild(header);
+    await wait(300);
+    header.style.opacity = '1';
+
+    await wait(300);
+    const banner = el('div', 'background:#1a1a2e;border-radius:6px;padding:4px 8px;margin-bottom:8px;font-size:9px;opacity:0;transition:opacity 0.3s');
+    banner.appendChild(el('span', 'color:#fb923c', 'Burn Bootcamp 9AM'));
+    banner.appendChild(el('span', 'color:#4a5568', ' · '));
+    banner.appendChild(el('span', 'color:#f87171', 'Social PM'));
+    container.appendChild(banner);
+    await wait(200);
+    banner.style.opacity = '1';
+
+    await wait(300);
+    const macroData = [
+      { label: 'CALORIES', value: '847', max: '1800', pct: 47, color: '#60a5fa' },
+      { label: 'PROTEIN', value: '92g', max: '160g', pct: 58, color: '#4ade80' },
+      { label: 'FIBER', value: '18g', max: '35g', pct: 51, color: '#facc15' },
+    ];
+    const macros = el('div', 'display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:8px');
+    const cards: HTMLElement[] = [];
+    const bars: HTMLElement[] = [];
+
+    for (const m of macroData) {
+      const card = el('div', 'background:#1a1a2e;border-radius:6px;padding:5px 3px;text-align:center;border:1px solid #2d3748;opacity:0;transition:opacity 0.3s');
+      card.appendChild(el('div', `font-size:14px;font-weight:700;color:${m.color}`, m.value));
+      card.appendChild(el('div', 'font-size:7px;color:#6b7280', '/ ' + m.max));
+      card.appendChild(el('div', 'font-size:7px;color:#8892b0;margin-top:2px;letter-spacing:0.5px', m.label));
+      const track = el('div', 'background:#374151;border-radius:2px;height:2px;margin-top:3px;overflow:hidden');
+      const bar = el('div', `height:2px;border-radius:2px;background:${m.color};width:0%;transition:width 0.8s ease-out`);
+      track.appendChild(bar);
+      card.appendChild(track);
+      macros.appendChild(card);
+      cards.push(card);
+      bars.push(bar);
+    }
+    container.appendChild(macros);
+
+    for (let i = 0; i < cards.length; i++) {
+      await wait(150);
+      cards[i].style.opacity = '1';
+    }
+    await wait(200);
+    for (let i = 0; i < bars.length; i++) {
+      bars[i].style.width = macroData[i].pct + '%';
+      await wait(150);
+    }
+
+    await wait(400);
+    const logTitle = el('div', 'color:#e2e8f0;font-size:9px;font-weight:600;margin-bottom:4px;opacity:0;transition:opacity 0.3s', "Today's Log");
+    container.appendChild(logTitle);
+    await wait(200);
+    logTitle.style.opacity = '1';
+
+    const entries = [
+      { food: 'Greek yogurt + berries', time: '8:30 AM', cal: '285 cal' },
+      { food: 'Grilled chicken salad', time: '12:15 PM', cal: '420 cal' },
+      { food: 'Protein shake', time: '3:00 PM', cal: '142 cal' },
+    ];
+
+    for (const e of entries) {
+      await wait(250);
+      const row = el('div', 'display:flex;justify-content:space-between;align-items:center;background:#1a1a2e;border-radius:4px;padding:3px 6px;margin-bottom:3px;border:1px solid #2d3748;opacity:0;transform:translateY(4px);transition:opacity 0.3s,transform 0.3s');
+      const left = el('div', '');
+      left.appendChild(el('div', 'color:#e2e8f0;font-size:9px', e.food));
+      left.appendChild(el('div', 'color:#6b7280;font-size:7px', e.time));
+      row.appendChild(left);
+      row.appendChild(el('span', 'color:#8892b0;font-size:8px', e.cal));
+      container.appendChild(row);
+      await wait(50);
+      row.style.opacity = '1';
+      row.style.transform = 'translateY(0)';
+    }
+  }
+
+  async function buildDrinkFinderMockup(container: HTMLElement) {
+    container.innerHTML = '';
+
+    const searchBar = el('div', 'background:#112240;border:1px solid #233554;border-radius:6px;padding:6px 10px;margin-bottom:8px;display:flex;align-items:center;gap:6px');
+    searchBar.appendChild(el('span', 'color:#4a5568;font-size:12px', '🔍'));
+    const searchText = el('span', 'color:#ccd6f6;font-size:11px');
+    searchBar.appendChild(searchText);
+    const cursor = el('span', 'color:#1d4ed8;animation:blink 0.8s infinite', '|');
+    searchBar.appendChild(cursor);
+    container.appendChild(searchBar);
+
+    const query = "Tito's Vodka 750ml";
+    for (const char of query) {
+      await wait(50);
+      searchText.textContent += char;
+    }
+    cursor.remove();
+
+    await wait(400);
+    const status = el('div', 'color:#8892b0;font-size:9px;margin-bottom:6px;opacity:0;transition:opacity 0.3s', 'Comparing 4 stores near you...');
+    container.appendChild(status);
+    await wait(100);
+    status.style.opacity = '1';
+
+    await wait(600);
+    status.textContent = '4 results found';
+
+    const results = [
+      { store: 'Total Wine', price: '$19.99', best: true, dist: '0.3 mi' },
+      { store: 'ABC Fine Wine', price: '$22.49', best: false, dist: '1.2 mi' },
+      { store: 'Publix', price: '$24.99', best: false, dist: '0.8 mi' },
+      { store: 'CVS', price: '$27.99', best: false, dist: '1.5 mi' },
+    ];
+
+    for (const r of results) {
+      await wait(200);
+      const row = el('div', `display:flex;justify-content:space-between;align-items:center;background:#112240;border:1px solid ${r.best ? '#065f46' : '#233554'};border-radius:6px;padding:5px 10px;margin-bottom:4px;opacity:0;transform:translateX(-8px);transition:opacity 0.3s,transform 0.3s`);
+      const left = el('div', '');
+      left.appendChild(el('div', 'color:#ccd6f6;font-size:10px', r.store));
+      left.appendChild(el('div', 'color:#6b7280;font-size:7px', r.dist));
+      row.appendChild(left);
+      const right = el('div', 'display:flex;align-items:center;gap:6px');
+      if (r.best) right.appendChild(el('span', 'background:#065f46;color:#4ade80;padding:1px 6px;border-radius:4px;font-size:7px;font-weight:600', 'BEST'));
+      right.appendChild(el('span', `color:${r.best ? '#4ade80' : '#8892b0'};font-size:11px;font-weight:${r.best ? '700' : '400'}`, r.price));
+      row.appendChild(right);
+      container.appendChild(row);
+      await wait(50);
+      row.style.opacity = '1';
+      row.style.transform = 'translateX(0)';
+    }
+
+    await wait(400);
+    const savings = el('div', 'text-align:center;margin-top:2px;opacity:0;transition:opacity 0.4s');
+    savings.appendChild(el('span', 'color:#4ade80;font-size:10px;font-weight:600', 'Save $8.00 '));
+    savings.appendChild(el('span', 'color:#6b7280;font-size:9px', 'at Total Wine'));
+    container.appendChild(savings);
+    await wait(100);
+    savings.style.opacity = '1';
+  }
+
+  async function loopUIMockup(container: HTMLElement, builder: (el: HTMLElement) => Promise<void>) {
+    while (true) {
+      await builder(container);
+      await wait(3000);
+    }
+  }
+
+  const terminalObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const terminal = entry.target as HTMLElement;
       const wrapper = terminal.closest('.mini-terminal') as HTMLElement;
-
       if (entry.isIntersecting && !terminal.dataset.started) {
         terminal.dataset.started = '1';
         wrapper?.classList.add('visible');
-
         const projectName = terminal.dataset.project!;
-        const anim = animations[projectName];
+        const anim = terminalAnimations[projectName];
         if (!anim) return;
-
         const titleEl = wrapper?.querySelector('[data-terminal-title]');
         if (titleEl) titleEl.textContent = anim.title;
-
-        loopAnimation(terminal, anim.lines);
+        loopTerminalAnimation(terminal, anim.lines);
       }
     });
   }, { threshold: 0.3 });
 
-  document.querySelectorAll('.terminal-body').forEach(el => observer.observe(el));
+  const previewObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const preview = entry.target as HTMLElement;
+      const wrapper = preview.closest('.mini-preview') as HTMLElement;
+      if (entry.isIntersecting && !preview.dataset.started) {
+        preview.dataset.started = '1';
+        wrapper?.classList.add('visible');
+        const projectName = preview.dataset.project!;
+        if (projectName === 'Personal Dietician') {
+          loopUIMockup(preview, buildDieticianMockup);
+        } else if (projectName === 'DrinkFinder') {
+          loopUIMockup(preview, buildDrinkFinderMockup);
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.terminal-body').forEach(el => terminalObserver.observe(el));
+  document.querySelectorAll('.preview-body').forEach(el => previewObserver.observe(el));
 </script>
