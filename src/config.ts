@@ -53,6 +53,14 @@ export const siteConfig = {
       skills: ["Next.js", "TypeScript"],
     },
     {
+      name: "Stock Lakehouse",
+      description:
+        "Lakehouse exploring decades of daily US stock-market history. Trino federates from Postgres into Iceberg on MinIO through a Bronze/Silver/Gold medallion pipeline, and a local Ollama model turns plain-English questions into live SQL.",
+      link: "https://github.com/ahthakur/stock-lakehouse",
+      demo: "/demo/stock-lakehouse",
+      skills: ["Trino", "Apache Iceberg", "MinIO", "Ollama", "Python"],
+    },
+    {
       name: "Go InfoSec Lab",
       description:
         "Collection of Go-based security utilities — entropy analyzer, hash cracker, and subnet calculator — for hands-on infosec experimentation.",
